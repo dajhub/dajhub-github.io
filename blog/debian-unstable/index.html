@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <title>Moving to Debian Unstable - dajhub</title>
+    <meta name="description" content="Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you enjoy your stay and find something that is useful.">
+
+    
+    <link rel="stylesheet" href="https://dajhub.co.uk/base.css">
+    <link rel="stylesheet" href="https://dajhub.co.uk/auto.css">
+
+    <link rel="preload" href=https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;font-awesome&#x2F;6.3.0&#x2F;css&#x2F;all.min.css as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href=https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;font-awesome&#x2F;6.3.0&#x2F;css&#x2F;all.min.css></noscript>
+
+    
+
+    
+    
+    <meta property="og:locale" content="en_GB">
+    
+    <meta property="og:title" content="Moving to Debian Unstable">
+    
+    <meta property="og:type" content="article">
+    <meta property="article:author" content="https://dajhub.co.uk/about/">
+    <meta property="article:published_time" content="2024-08-05">
+    
+    
+    <meta property="article:tag" content="debian">
+    
+    
+    
+    
+    <meta property="og:url" content="https://dajhub.co.uk/blog/debian-unstable/">
+    
+    
+    <meta property="og:description" content="Debian is often chosen for its stability and for a system that just works.  However, that stability often means that packages can become out of date.  Moving to the unstable branch might be an option.
+">
+    
+
+
+    
+    
+</head>
+<body>
+<div class="container">
+    
+    
+    <header>
+        <h1 class="site-header">
+            <a href="https:&#x2F;&#x2F;dajhub.co.uk"><img src="&#x2F;logo.png" alt="logo" width="42" height="42">
+            <href="https:&#x2F;&#x2F;dajhub.co.uk">::
+            <href="https:&#x2F;&#x2F;dajhub.co.uk">dajhub
+            </a>
+        </h1>
+        <nav>
+            <ul>
+            
+            
+                
+                <li><a class="active" href="https:&#x2F;&#x2F;dajhub.co.uk&#x2F;blog">Blog</a></li>
+            
+                
+                <li><a  href="https:&#x2F;&#x2F;dajhub.co.uk&#x2F;tags">Tags</a></li>
+            
+                
+                <li><a  href="https:&#x2F;&#x2F;dajhub.co.uk&#x2F;about">About</a></li>
+            
+            
+            </ul>
+        </nav>
+    </header>
+    
+    
+
+<article class="post">
+    
+    
+    
+        
+        <header>
+            <h1>Moving to Debian Unstable</h1>
+        </header>
+        
+        
+    <div class="article-info">
+        
+        
+        <div class="article-date">August  5, 2024 ◦ 2 min ◦ </div>
+        
+        <div class="article-taxonomies">
+            
+            
+                <ul class="article-tags">
+                    
+                    <li><a href="https://dajhub.co.uk/tags/debian/">#debian</a></li>
+                    
+                </ul>
+            
+        </div>
+    </div>
+
+        
+        <header>
+            <h2 class="post-summary">Debian is often chosen for its stability and for a system that just works.  However, that stability often means that packages can become out of date.  Moving to the unstable branch might be an option.
+</h2>
+        </header>
+    
+    
+    <div class="content">
+        <span id="continue-reading"></span>
+<p>Debian Unstable will provide you with newer packages, but there are inherent risks of breakages, since the packages have not been fully tested. If you do move to Unstable, it's probably best not to do it on a critical machine where you need guaranteed stability. With that said, the steps to move from Debian Stable to Unstable:</p>
+<ol>
+<li>
+<p>Using an editor such as nano, micro or vim open the Apt Sources file.  Apt downloads packages from one or more software repositories (sources) and installs them onto your computer.</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> micro /etc/apt/sources.list</span>
+</span></code></pre>
+<p><img src="https://dajhub.co.uk/blog/debian-unstable/sources-orig.webp" alt="sources.list original" /></p>
+</li>
+<li>
+<p>In the <code>sources.list</code> there needs to be only two entries (see screenshot below):</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">deb</span></span><span class="z-meta z-function-call z-arguments z-shell"> http://deb.debian.org/debian/ unstable main non-free-firmware</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">deb-src</span></span><span class="z-meta z-function-call z-arguments z-shell"> http://deb.debian.org/debian/ unstable main non-free-firmware</span>
+</span></code></pre>
+<p>The other entries/sources can be commented out using the <strong><code>#</code></strong> at the beginning of the line.  This will stop them from running.  You can also delete the unneeded sources if desired.</p>
+<p><img src="https://dajhub.co.uk/blog/debian-unstable/sources-unstable.webp" alt="sources.list unstable" /></p>
+</li>
+<li>
+<p>Next, to update the sources list run</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> apt update</span> <span class="z-keyword z-operator z-logical z-and z-shell">&amp;&amp;</span> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> apt full-upgrade</span>
+</span></code></pre>
+<p>This may take some time.</p>
+</li>
+</ol>
+<blockquote class="callout important">
+    
+    <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM11 15H13V17H11V15ZM11 7H13V13H11V7Z" fill="currentColor"></path></svg>
+    </div>
+    <div class="content">
+        
+        <p><strong>Important</strong></p>
+        
+        <p>In order to make your life easier in the Unstable version install the "<em>apt-listbugs and apt-listchanges packages in order to be made aware of grave bugs or important changes when you install new packages or during an upgrade.</em>" <sup><a href="#debian_unstable">1</a></sup></p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> apt update</span> <span class="z-keyword z-operator z-logical z-and z-shell">&amp;&amp;</span> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> apt install apt-listbugs apt-listchanges</span>
+</span></code></pre>
+<p>There is additional debian guidance for Unstable/Sid user which it is worth taking note of in the link below.</p>
+
+    </div>
+</blockquote>
+<hr />
+<p><strong>Sources:</strong></p>
+<p><a name="debian_unstable">1</a>: <a href="https://wiki.debian.org/DebianUnstable#:~:text=Install%20the%20apt%2Dlistbugs%20and,data%20is%20not%20a%20problem">Debian Best Practices for Sid/Unstable Users</a></p>
+
+    </div>
+    
+
+    
+</article>
+
+
+    <footer>
+        <p>
+            
+<span class="icon-text">
+  
+
+  
+
+  
+  <a href="https://github.com/dajhub" aria-label="Open dajhub GitHub" target="_blank">
+    <span class="icon is-large">
+      <i class="fab fa-github fa-lg" aria-hidden="true" title="GitHub"></i>
+    </span>
+  </a>
+  
+
+  
+  <a href="https://gitlab.com/dajhub" aria-label="Open dajhub GitLab" target="_blank">
+    <span class="icon is-large">
+      <i class="fab fa-gitlab fa-lg" aria-hidden="true" title="GitLab"></i>
+    </span>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <a href="mailto:dajhub63@gmail.com" aria-label="Email dajhub63@gmail.com" target="_blank">
+    <span class="icon is-large">
+      <i class="far fa-envelope fa-lg" aria-hidden="true" title="email"></i>
+    </span>
+  </a>
+  
+
+  
+
+  
+</span>
+
+        </p>
+        <p>
+            
+            
+        </p>
+    </footer>
+</div>
+</body>
+</html>

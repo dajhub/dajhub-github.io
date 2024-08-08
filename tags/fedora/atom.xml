@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>dajhub - fedora</title>
+    <subtitle>Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you enjoy your stay and find something that is useful.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://dajhub.co.uk/tags/fedora/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://dajhub.co.uk"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-09-22T00:00:00+00:00</updated>
+    <id>https://dajhub.co.uk/tags/fedora/atom.xml</id>
+    <entry xml:lang="en">
+        <title>i3 Window Manager - Spiral Tiling</title>
+        <published>2023-09-22T00:00:00+00:00</published>
+        <updated>2023-09-22T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/blog/i3-tiling/"/>
+        <id>https://dajhub.co.uk/blog/i3-tiling/</id>
+        
+        <summary type="html">&lt;p&gt;i3 is a great tiling window manager which automatically places your windows in vertical columns.  However, it is fairly straight foward to move to a spiral layout.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Peek in Fedora</title>
+        <published>2021-01-21T00:00:00+00:00</published>
+        <updated>2021-01-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/blog/peek-in-fedora/"/>
+        <id>https://dajhub.co.uk/blog/peek-in-fedora/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;phw&#x2F;peek&quot;&gt;Peek&lt;&#x2F;a&gt; is an open source screen recorder for producing gif&#x27;s.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+</feed>

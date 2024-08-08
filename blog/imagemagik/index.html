@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <title>Resizing Images with ImageMagick - dajhub</title>
+    <meta name="description" content="Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you enjoy your stay and find something that is useful.">
+
+    
+    <link rel="stylesheet" href="https://dajhub.co.uk/base.css">
+    <link rel="stylesheet" href="https://dajhub.co.uk/auto.css">
+
+    <link rel="preload" href=https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;font-awesome&#x2F;6.3.0&#x2F;css&#x2F;all.min.css as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href=https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;font-awesome&#x2F;6.3.0&#x2F;css&#x2F;all.min.css></noscript>
+
+    
+
+    
+    
+    <meta property="og:locale" content="en_GB">
+    
+    <meta property="og:title" content="Resizing Images with ImageMagick">
+    
+    <meta property="og:type" content="article">
+    <meta property="article:author" content="https://dajhub.co.uk/about/">
+    <meta property="article:published_time" content="2022-04-16">
+    
+    
+    <meta property="article:tag" content="software">
+    
+    
+    
+    
+    <meta property="og:url" content="https://dajhub.co.uk/blog/imagemagik/">
+    
+    
+
+
+    
+    
+</head>
+<body>
+<div class="container">
+    
+    
+    <header>
+        <h1 class="site-header">
+            <a href="https:&#x2F;&#x2F;dajhub.co.uk"><img src="&#x2F;logo.png" alt="logo" width="42" height="42">
+            <href="https:&#x2F;&#x2F;dajhub.co.uk">::
+            <href="https:&#x2F;&#x2F;dajhub.co.uk">dajhub
+            </a>
+        </h1>
+        <nav>
+            <ul>
+            
+            
+                
+                <li><a class="active" href="https:&#x2F;&#x2F;dajhub.co.uk&#x2F;blog">Blog</a></li>
+            
+                
+                <li><a  href="https:&#x2F;&#x2F;dajhub.co.uk&#x2F;tags">Tags</a></li>
+            
+                
+                <li><a  href="https:&#x2F;&#x2F;dajhub.co.uk&#x2F;about">About</a></li>
+            
+            
+            </ul>
+        </nav>
+    </header>
+    
+    
+
+<article class="post">
+    
+    
+    
+        
+        <header>
+            <h1>Resizing Images with ImageMagick</h1>
+        </header>
+        
+    <div class="article-info">
+        
+        
+        <div class="article-date">April 16, 2022 ◦ 2 min ◦ </div>
+        
+        <div class="article-taxonomies">
+            
+            
+                <ul class="article-tags">
+                    
+                    <li><a href="https://dajhub.co.uk/tags/software/">#software</a></li>
+                    
+                </ul>
+            
+        </div>
+    </div>
+
+    
+    
+    <div class="content">
+        <p>ImageMagick is free and open-source software which allows you to use the command line to convert and modify images in many formats including GIF, JPEG, and PNG. Using the terminal to manipulate images is, on the whole, straightforward and can save a lot of time.</p>
+<p>In Fedora you will first need to install ImageMagick:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> sudo dnf install ImageMagick</span>
+</span></code></pre>
+<p>In Ubuntu the commands are:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> sudo apt update</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> sudo apt upgrade</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> sudo apt install imagemagick</span>
+</span></code></pre>
+<p>In Arch:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> sudo pacman<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>S</span> imagemagick</span>
+</span></code></pre>
+<p>There are a range of different activities you can do using ImageMagick. Below are two commands which I use regularly.</p>
+<p><strong>Converting an Image to a Different Format</strong></p>
+<p>You may have, for example, an image which you want to convert from a png to jpg format. To do this make sure you are in the directory where your file is.  If the picture is in the folder Pictures then in your terminal type, <code>cd Pictures</code>. Once in the correct folder type into the terminal:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> convert forest.png forest.jpg</span>
+</span></code></pre>
+<p><strong>Resizing an Image</strong></p>
+<p>The convert command can also be used to quickly resize an image. I often use this to resize images for my screen size or my blog.  The following command gets ImageMagick to resize an image to 1366 pixels in width and 768 pixels in height:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">convert</span></span><span class="z-meta z-function-call z-arguments z-shell"> forest.jpg<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>resize</span> 1366x768 forest.jpg</span>
+</span></code></pre>
+<p>To find out the other things you can do with the package visit the ImageMagicks <a href="https://github.com/ImageMagick/ImageMagick#features-and-capabilities"><strong>github page</strong></a>.</p>
+
+    </div>
+    
+
+    
+</article>
+
+
+    <footer>
+        <p>
+            
+<span class="icon-text">
+  
+
+  
+
+  
+  <a href="https://github.com/dajhub" aria-label="Open dajhub GitHub" target="_blank">
+    <span class="icon is-large">
+      <i class="fab fa-github fa-lg" aria-hidden="true" title="GitHub"></i>
+    </span>
+  </a>
+  
+
+  
+  <a href="https://gitlab.com/dajhub" aria-label="Open dajhub GitLab" target="_blank">
+    <span class="icon is-large">
+      <i class="fab fa-gitlab fa-lg" aria-hidden="true" title="GitLab"></i>
+    </span>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <a href="mailto:dajhub63@gmail.com" aria-label="Email dajhub63@gmail.com" target="_blank">
+    <span class="icon is-large">
+      <i class="far fa-envelope fa-lg" aria-hidden="true" title="email"></i>
+    </span>
+  </a>
+  
+
+  
+
+  
+</span>
+
+        </p>
+        <p>
+            
+            
+        </p>
+    </footer>
+</div>
+</body>
+</html>

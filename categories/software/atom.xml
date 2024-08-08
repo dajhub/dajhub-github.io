@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>dajhub - software</title>
+    <subtitle>Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you enjoy your stay and find something that is useful.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://dajhub.co.uk/categories/software/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://dajhub.co.uk"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2021-08-11T00:00:00+00:00</updated>
+    <id>https://dajhub.co.uk/categories/software/atom.xml</id>
+    <entry xml:lang="en">
+        <title>软件示例</title>
+        <published>2021-08-11T00:00:00+00:00</published>
+        <updated>2021-08-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/projects/index-zh/"/>
+        <id>https://dajhub.co.uk/projects/index-zh/</id>
+        
+        <summary type="html">&lt;p&gt;这是我写的第一个软件!&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Example software project</title>
+        <published>2021-08-11T00:00:00+00:00</published>
+        <updated>2021-08-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/projects/project-1/"/>
+        <id>https://dajhub.co.uk/projects/project-1/</id>
+        
+        <summary type="html">&lt;p&gt;This is my first software project!&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+</feed>
