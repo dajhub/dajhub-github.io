@@ -1,0 +1,288 @@
+<!doctype html><html class="dark light" lang=en><head><meta charset=UTF-8><meta content="IE=edge" http-equiv=X-UA-Compatible><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content=https://dajhub.co.uk name=base><title>
+            
+                Changing the SDDM Display Manager (non-KDE)
+            
+        </title><meta content="Changing the SDDM Display Manager (non-KDE)" property=og:title><meta content="Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you find something that is useful. " property=og:description><meta content="Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you find something that is useful. " name=description><link href=https://dajhub.co.uk/icon/favicon.png rel=icon type=image/png><link href=https://dajhub.co.uk/fonts.css rel=stylesheet><script defer src=https://dajhub.co.uk/js/codeblock.js></script><script defer src=https://dajhub.co.uk/js/toc.js></script><script defer src=https://dajhub.co.uk/js/note.js></script><script>MathJax={tex:{inlineMath:[[`\$`,`\$`],[`\\\\(`,`\\\\)`]]}}</script><script async id=MathJax-script src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><link title="
+    dajhub
+" href=https://dajhub.co.uk/atom.xml rel=alternate type=application/atom+xml><link href=https://dajhub.co.uk/theme/light.css rel=stylesheet><link href=https://dajhub.co.uk/theme/dark.css id=darkModeStyle rel=stylesheet><script>var themeToggleMode=`toggle`</script><script src=https://dajhub.co.uk/js/themetoggle.js></script><script>setTheme(getSavedTheme())</script><link href=https://dajhub.co.uk/main.css media=screen rel=stylesheet><script src="https://dajhub.co.uk/js/searchElasticlunr.min.js?h=3626c0ef99daa745b31e" defer></script><body><div class=left-content></div><div class=content><nav><div class=left-nav><a href=https://dajhub.co.uk>dajhub</a><div class=socials><a class=social href=https://gitlab.com/dajhub/ rel=me> <img alt=gitlab src=https://dajhub.co.uk/icons/social/gitlab.svg> </a><a class=social href=https://github.com/dajhub/ rel=me> <img alt=github src=https://dajhub.co.uk/icons/social/github.svg> </a></div></div><div class=right-nav><a href=https://dajhub.co.uk/posts style=margin-right:.5em>/posts</a><a href=https://dajhub.co.uk/projects style=margin-right:.5em>/projects</a><a href=https://dajhub.co.uk/tags style=margin-right:.5em>/tags</a><button title="$SHORTCUT to open search" class=search-button id=search-button><img alt=Search class=search-icon src=https://dajhub.co.uk/icons/search.svg></button><div class="search-modal js" aria-labelledby=modalTitle id=searchModal role=dialog><div id=modal-content><h1 class=page-header id=modalTitle>Search</h1><div id=searchBar><input aria-controls=results-container aria-expanded=false autocomplete=off id=searchInput placeholder=Search... role=combobox spellcheck=false><button title="Clear search" class=clear-button id=clear-search><svg viewbox="0 -960 960 960" xmlns=http://www.w3.org/2000/svg><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button></div><div id=results-container><div id=results-info><span id=zero_results style=display:none>No results</span><span id=one_result style=display:none>1 result</span><span id=many_results style=display:none>$NUMBER results</span></div><div id=results role=listbox></div></div></div></div><a onclick="toggleTheme(); event.preventDefault();" href=# id=dark-mode-toggle> <img alt=Light id=sun-icon src=https://dajhub.co.uk/icons/sun.svg> <img alt=Dark id=moon-icon src=https://dajhub.co.uk/icons/moon.svg style=filter:invert()> </a><script>updateItemToggleTheme()</script></div></nav><div data-selector="main article p" class=visible-element-observer-root><main><article><div class=title><div class=page-header>Changing the SDDM Display Manager (non-KDE)</div><div class=meta>Posted on <time>29-May-2025</time><span class=tags-label>::</span><span class=tags> <a class=post-tag href=https://dajhub.co.uk/tags/display-manager/>display manager</a> <a class=post-tag href=https://dajhub.co.uk/tags/software/>software</a> </span></div></div><section class=body><p>While I do not use the KDE desktop I do like its display manager, SDDM. The default SDDM theme is not, in my opinion, very visually appealing (see image below) but it can be changed. This post looks at how we can change the theme and then edit it to our liking. I am currently using Arch but there will be similarities with other Linux Distribution such as Fedora and Debian.<h1 id=installing-the-sddm-display-manager><a aria-label="Anchor link for: installing-the-sddm-display-manager" class=zola-anchor href=#installing-the-sddm-display-manager>Installing the SDDM Display Manager</a></h1><p><img alt="default sddm" src=https://dajhub.co.uk/posts/sddm/sddm-default.webp><p>In Arch, if you install and enable the sddm display manager (see terminal commands below) it will look similar to the screenshot above. The <a href=https://dajhub.co.uk/blog/cinnamon-fedora-minimal/#enabling-the-display-manager>Fedora sddm display manager</a> will look slightly different.<pre class=language-bash data-lang=bash><code class=language-bash data-lang=bash>sudo pacman -S sddm
+sudo systemctl enable sddm.service
+</code></pre><h1 id=install-an-sddm-theme><a aria-label="Anchor link for: install-an-sddm-theme" class=zola-anchor href=#install-an-sddm-theme>Install an SDDM Theme</a></h1><p>I have found the <a href=https://github.com/aczw/sddm-theme-corners>sddm corners theme</a> easy to install (in a non-KDE environment) and also easy to edit. Instructions for installation can be found on their <a href="https://github.com/aczw/sddm-theme-corners?tab=readme-ov-file#installation">site</a>. The theme can be found in Arch's AUR. To install:<pre class=language-bash data-lang=bash><code class=language-bash data-lang=bash># Install dependencies
+paru -Syu sddm qt5-graphicaleffects qt5-svg qt5-quickcontrols2
+
+# Install corners theme
+paru -S sddm-theme-corners-git
+
+# Makes it the default theme. 
+echo "[Theme]
+Current=corners" | sudo tee /etc/sddm.conf
+
+# Enable sddm service if this has not already been done above.  Use -f if needed.
+sudo systemctl enable sddm.service
+</code></pre><p>SDDM with the new theme applied:<p><img alt="sddm corners orig" src=https://dajhub.co.uk/posts/sddm/sddm-corners-orig.webp><h1 id=making-changes-to-the-corners-theme><a aria-label="Anchor link for: making-changes-to-the-corners-theme" class=zola-anchor href=#making-changes-to-the-corners-theme>Making Changes to the Corners Theme</a></h1><p>With the new theme installed we can easily tweak it. The theme is located in <code>/usr/share/sddm/themes/corners/</code><p><img alt="corners files" src=https://dajhub.co.uk/posts/sddm/corners-files.webp><p>Changes that I have made:<ul><li>replaced the background image, located in <code>/usr/share/sddm/themes/corners/bacgrounds</code><li>widening the vertical gap between the date and time which seemed too close to me<li>removing the user picture<li>changing the look of the login details in the bottom right</ul><p>The result:<p><img alt="corners new" src=https://dajhub.co.uk/posts/sddm/corners-new.webp><p>To achieve the above you need to open the configuration file for the <strong>corners</strong> theme. I use <strong>micro</strong> as my editor but you may be using <strong>nano</strong> or <strong>vim</strong>.<pre class=language-bash data-lang=bash><code class=language-bash data-lang=bash>sudo micro /usr/share/sddm/themes/corners/theme.conf
+</code></pre><p>The contents of the <strong>original</strong> file:<pre class=language-plain data-lang=plain><code class=language-plain data-lang=plain>1	## Please see https://github.com/aczw/sddm-theme-corners/blob/main/CONFIG.md for
+2	## more information about these options. Happy configuring!
+3	
+4	[General]
+5	
+6	# BgSource: string. Path to an image, used as the wallpaper. Can be placed
+7	# in the `backgrounds/` folder for convenience (see below!)
+8	#
+9	# FontFamily: string. Name of the font family. You can find this with
+10	# something like `fontconfig`, for example.
+11	#
+12	# FontSize: number. This value is used for everything *except* the date/time.
+13	#
+14	# Padding: number. How far away things should be from the edge of your screen.
+15	#
+16	# Radius: number. Corner radius for UI. Set to 0 to disable rounded corners.
+17	#
+18	# Scale: number. Adjusts the size of UI elements. Can be anything, but I
+19	# would stick between 1 and 2 (e.g. 1.5).
+20	
+21	BgSource="backgrounds/glacier.png"
+22	FontFamily="Atkinson Hyperlegible"
+23	FontSize=9
+24	Padding=50
+25	Radius=10
+26	Scale=1
+27	
+28	# UserPictureEnabled: boolean. By default the user picture is shown. Set to false
+29	# if you don't have/want a user picture, or you don't use the
+30	# user selection functionality.
+31	#
+32	# UserBorderWidth: number. Width of the border around your picture. Set to
+33	# 0 to remove.
+34	#
+35	# UserBorderColor: color. Border color around your picture. Useless if border
+36	# width is 0.
+37	#
+38	# UserColor: color. Background color of the default, blank avatar. Only
+39	# visible if you don't have your own picture.
+40	
+41	UserPictureEnabled=true
+42	UserBorderWidth=5
+43	UserBorderColor="#b4befe"
+44	UserColor="#cdd6f4"
+45	
+46	# InputColor: color. Background color of the input fields.
+47	#
+48	# InputTextColor: color. Color of text you enter in the fields.
+49	#
+50	# InputBorderWidth: number. Width of the border around the active field. Set
+51	# to 0 to remove.
+52	#
+53	# InputBorderColor: color. Border color of active field. Useless if border
+54	# width is 0.
+55	#
+56	# UserPlaceholderText: string. Placeholder text shown when user field is empty.
+57	#
+58	# PassPlaceholderText: string. Placeholder text shown when user field is empty.
+59	#
+60	# HidePassword: boolean. Whether to replace your entered password with dots.
+61	
+62	InputColor="#1e1e2e"
+63	InputTextColor="#cdd6f4"
+64	InputBorderWidth=4
+65	InputBorderColor="#b4befe"
+66	UserPlaceholderText="user"
+67	PassPlaceholderText="password"
+68	HidePassword=true
+69	
+70	# LoginButtonTextColor: color. Text color on the login button.
+71	#
+72	# LoginButtonText: string. Text displayed on the button.
+73	#
+74	# LoginButtonColor: color. Background color of the button.
+75	
+76	LoginButtonTextColor="#1e1e2e"
+77	LoginButtonText="Login"
+78	LoginButtonColor="#b4befe"
+79	
+80	# PopupColor: color. Background color of popup window.
+81	#
+82	# PopupActiveColor: color. Color around the currently selected entry.
+83	#
+84	# PopupActiveTextColor: color. Text color of the currently selected entry.
+85	# Mainly provided for potential contrast issues.
+86	
+87	PopupColor="#b4befe"
+88	PopupActiveColor="#1e1e2e"
+89	PopupActiveTextColor="#cdd6f4"
+90	
+91	# SessionButtonColor: color. Session button background color.
+92	#
+93	# SessionIconColor: color. Color of the icon inside the session button.
+94	#
+95	# PowerButtonColor: color. Power button background color.
+96	#
+97	# PowerIconColor: color. Color of the icon inside the power button.
+98	
+99	SessionButtonColor="#b4befe"
+100	SessionIconColor="#1e1e2e"
+101	PowerButtonColor="#b4befe"
+102	PowerIconColor="#1e1e2e"
+103	
+104	# DateTimeSpacing: number. Spacing between the date and time.
+105	#
+106	# Date/TimeColor: color. Date/time text color.
+107	#
+108	# Date/TimeSize: number. Font size for the date/time.
+109	#
+110	# Date/TimeIsBold: boolean. Whether date/time text should be bolded.
+111	#
+112	# Date/TimeOpacity: number. Date/time text opacity.
+113	#
+114	# Date/TimeFormat: string. Change the format of how the date and time is displayed.
+115	# Note that they use different formats.
+116	
+117	DateTimeSpacing=-20
+118	
+119	DateColor="#cdd6f4"
+120	DateSize=36
+121	DateIsBold=false
+122	DateOpacity=1.0
+123	DateFormat="dddd, MMMM d"
+124	
+125	TimeColor="#cdd6f4"
+126	TimeSize=48
+127	TimeIsBold=true
+128	TimeOpacity=1.0
+129	TimeFormat="hh:mm AP"
+</code></pre><p>The changes I then made to the above config file:<pre class=language-text data-lang=text><code class=language-text data-lang=text>line 21 BgSource="backgrounds/light-blue-layers.jpg" #changed the background
+line 41 UserPictureEnabled=false #removes the login image/picture
+line 62 InputColor="#b4befe"
+line 63 InputTextColor="#4c4f69"
+line 64 InputBorderWidth=0 #changed from 4 to 0
+line 76 LoginButtonTextColor="#4c4f69"
+line 78 LoginButtonColor="#eff1f5"
+line 117 DateTimeSpacing=10 #changed from -20 to 10 to improve space between date & time
+</code></pre><p>However, I might, in the near future, change the color of the date and time to improve the contrast with the background. The white text does not really work on the light background.<p>Below is the full config file for the updated theme:<pre class=language-plain data-lang=plain><code class=language-plain data-lang=plain>## Please see https://github.com/aczw/sddm-theme-corners/blob/main/CONFIG.md for
+## more information about these options. Happy configuring!
+
+[General]
+
+# BgSource: string. Path to an image, used as the wallpaper. Can be placed
+# in the `backgrounds/` folder for convenience (see below!)
+#
+# FontFamily: string. Name of the font family. You can find this with
+# something like `fontconfig`, for example.
+#
+# FontSize: number. This value is used for everything *except* the date/time.
+#
+# Padding: number. How far away things should be from the edge of your screen.
+#
+# Radius: number. Corner radius for UI. Set to 0 to disable rounded corners.
+#
+# Scale: number. Adjusts the size of UI elements. Can be anything, but I
+# would stick between 1 and 2 (e.g. 1.5).
+
+BgSource="backgrounds/light-blue-layers.jpg"
+FontFamily="Atkinson Hyperlegible"
+FontSize=9
+Padding=50
+Radius=10
+Scale=1
+
+# UserPictureEnabled: boolean. By default the user picture is shown. Set to false
+# if you don't have/want a user picture, or you don't use the
+# user selection functionality.
+#
+# UserBorderWidth: number. Width of the border around your picture. Set to
+# 0 to remove.
+#
+# UserBorderColor: color. Border color around your picture. Useless if border
+# width is 0.
+#
+# UserColor: color. Background color of the default, blank avatar. Only
+# visible if you don't have your own picture.
+
+UserPictureEnabled=false
+UserBorderWidth=5
+UserBorderColor="#b4befe"
+UserColor="#cdd6f4"
+
+# InputColor: color. Background color of the input fields.
+#
+# InputTextColor: color. Color of text you enter in the fields.
+#
+# InputBorderWidth: number. Width of the border around the active field. Set
+# to 0 to remove.
+#
+# InputBorderColor: color. Border color of active field. Useless if border
+# width is 0.
+#
+# UserPlaceholderText: string. Placeholder text shown when user field is empty.
+#
+# PassPlaceholderText: string. Placeholder text shown when user field is empty.
+#
+# HidePassword: boolean. Whether to replace your entered password with dots.
+
+InputColor="#b4befe"
+InputTextColor="#4c4f69"
+InputBorderWidth=0
+InputBorderColor="#b4befe"
+UserPlaceholderText="user"
+PassPlaceholderText="password"
+HidePassword=true
+
+# LoginButtonTextColor: color. Text color on the login button.
+#
+# LoginButtonText: string. Text displayed on the button.
+#
+# LoginButtonColor: color. Background color of the button.
+
+LoginButtonTextColor="#4c4f69"
+LoginButtonText="Login"
+LoginButtonColor="#eff1f5"
+
+# PopupColor: color. Background color of popup window.
+#
+# PopupActiveColor: color. Color around the currently selected entry.
+#
+# PopupActiveTextColor: color. Text color of the currently selected entry.
+# Mainly provided for potential contrast issues.
+
+PopupColor="#b4befe"
+PopupActiveColor="#1e1e2e"
+PopupActiveTextColor="#cdd6f4"
+
+# SessionButtonColor: color. Session button background color.
+#
+# SessionIconColor: color. Color of the icon inside the session button.
+#
+# PowerButtonColor: color. Power button background color.
+#
+# PowerIconColor: color. Color of the icon inside the power button.
+
+SessionButtonColor="#b4befe"
+SessionIconColor="#1e1e2e"
+PowerButtonColor="#b4befe"
+PowerIconColor="#1e1e2e"
+
+# DateTimeSpacing: number. Spacing between the date and time.
+#
+# Date/TimeColor: color. Date/time text color.
+#
+# Date/TimeSize: number. Font size for the date/time.
+#
+# Date/TimeIsBold: boolean. Whether date/time text should be bolded.
+#
+# Date/TimeOpacity: number. Date/time text opacity.
+#
+# Date/TimeFormat: string. Change the format of how the date and time is displayed.
+# Note that they use different formats.
+
+DateTimeSpacing=10
+
+DateColor="#cdd6f4"
+DateSize=36
+DateIsBold=false
+DateOpacity=1.0
+DateFormat="dddd, MMMM d"
+
+TimeColor="#cdd6f4"
+TimeSize=48
+TimeIsBold=true
+TimeOpacity=1.0
+TimeFormat="hh:mm AP"
+</code></pre></section></article></main></div></div><div class=right-content><div class=toc><div class=heading>Table of Contents</div><ul class=toc-list><li class=parent><a href=https://dajhub.co.uk/posts/sddm/#installing-the-sddm-display-manager>Installing the SDDM Display Manager</a><li class=parent><a href=https://dajhub.co.uk/posts/sddm/#install-an-sddm-theme>Install an SDDM Theme</a><li class=parent><a href=https://dajhub.co.uk/posts/sddm/#making-changes-to-the-corners-theme>Making Changes to the Corners Theme</a></ul></div></div>

@@ -1,0 +1,196 @@
+<!doctype html><html class="dark light" lang=en><head><meta charset=UTF-8><meta content="IE=edge" http-equiv=X-UA-Compatible><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content=https://dajhub.co.uk name=base><title>
+            
+                Inserting callouts into a Zola static site
+            
+        </title><meta content="Inserting callouts into a Zola static site" property=og:title><meta content="Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you find something that is useful. " property=og:description><meta content="Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you find something that is useful. " name=description><link href=https://dajhub.co.uk/icon/favicon.png rel=icon type=image/png><link href=https://dajhub.co.uk/fonts.css rel=stylesheet><script defer src=https://dajhub.co.uk/js/codeblock.js></script><script defer src=https://dajhub.co.uk/js/toc.js></script><script defer src=https://dajhub.co.uk/js/note.js></script><script>MathJax={tex:{inlineMath:[[`\$`,`\$`],[`\\\\(`,`\\\\)`]]}}</script><script async id=MathJax-script src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><link title="
+    dajhub
+" href=https://dajhub.co.uk/atom.xml rel=alternate type=application/atom+xml><link href=https://dajhub.co.uk/theme/light.css rel=stylesheet><link href=https://dajhub.co.uk/theme/dark.css id=darkModeStyle rel=stylesheet><script>var themeToggleMode=`toggle`</script><script src=https://dajhub.co.uk/js/themetoggle.js></script><script>setTheme(getSavedTheme())</script><link href=https://dajhub.co.uk/main.css media=screen rel=stylesheet><script src="https://dajhub.co.uk/js/searchElasticlunr.min.js?h=3626c0ef99daa745b31e" defer></script><body><div class=left-content></div><div class=content><nav><div class=left-nav><a href=https://dajhub.co.uk>dajhub</a><div class=socials><a class=social href=https://gitlab.com/dajhub/ rel=me> <img alt=gitlab src=https://dajhub.co.uk/icons/social/gitlab.svg> </a><a class=social href=https://github.com/dajhub/ rel=me> <img alt=github src=https://dajhub.co.uk/icons/social/github.svg> </a></div></div><div class=right-nav><a href=https://dajhub.co.uk/posts style=margin-right:.5em>/posts</a><a href=https://dajhub.co.uk/projects style=margin-right:.5em>/projects</a><a href=https://dajhub.co.uk/tags style=margin-right:.5em>/tags</a><button title="$SHORTCUT to open search" class=search-button id=search-button><img alt=Search class=search-icon src=https://dajhub.co.uk/icons/search.svg></button><div class="search-modal js" aria-labelledby=modalTitle id=searchModal role=dialog><div id=modal-content><h1 class=page-header id=modalTitle>Search</h1><div id=searchBar><input aria-controls=results-container aria-expanded=false autocomplete=off id=searchInput placeholder=Search... role=combobox spellcheck=false><button title="Clear search" class=clear-button id=clear-search><svg viewbox="0 -960 960 960" xmlns=http://www.w3.org/2000/svg><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button></div><div id=results-container><div id=results-info><span id=zero_results style=display:none>No results</span><span id=one_result style=display:none>1 result</span><span id=many_results style=display:none>$NUMBER results</span></div><div id=results role=listbox></div></div></div></div><a onclick="toggleTheme(); event.preventDefault();" href=# id=dark-mode-toggle> <img alt=Light id=sun-icon src=https://dajhub.co.uk/icons/sun.svg> <img alt=Dark id=moon-icon src=https://dajhub.co.uk/icons/moon.svg style=filter:invert()> </a><script>updateItemToggleTheme()</script></div></nav><div data-selector="main article p" class=visible-element-observer-root><main><article><div class=title><div class=page-header>Inserting callouts into a Zola static site</div><div class=meta>Posted on <time>01-May-2026</time><span class=tags-label>::</span><span class=tags> <a class=post-tag href=https://dajhub.co.uk/tags/blog/>blog</a> <a class=post-tag href=https://dajhub.co.uk/tags/zola/>zola</a> </span></div></div><section class=body><p>I really like <a href=https://www.getzola.org>Zola</a> as a static site generator for my blog. It is free to install and because I run it through my GitHub account there are no hosting fees. The only ongoing cost is my domain name, dajhub.co.uk.<p>The Zola site has some great themes to choose from but the one I went for is a theme provided by <strong>not-matthias</strong> called <a href=https://github.com/not-matthias/apollo>apollo</a>. Its simplicity appealed and it has been working well for me.<p>The only change I have made is to add <strong>callouts</strong> to my site. Callouts are useful for highlighting tips, warnings, or extra context without breaking the reading flow. The Apollo theme doesn’t include them by default, so I added my own lightweight implementation.<h2 id=1-add-a-nerd-font><a aria-label="Anchor link for: 1-add-a-nerd-font" class=zola-anchor href=#1-add-a-nerd-font>1. Add a Nerd Font</a></h2><p>I wanted my callouts to use icons and so I needed to add an appropriate font. I went for a <a href=https://www.nerdfonts.com/font-downloads>Nerd Font</a> and downloaded the <strong>JetBrainsMono Nerd Font</strong>. Once downloaded I placed just one font, <strong>JetBrainsMonoNerdFontPropo-Regular.ttf</strong>, into the already existing folder at /static/fonts/JetbrainsMono, i.e.<pre><code>static/
+  fonts/
+    JetBrainsMono/
+      JetBrainsMonoNerdFontPropo-Regular.ttf
+</code></pre><h2 id=2-create-callouts-scss><a aria-label="Anchor link for: 2-create-callouts-scss" class=zola-anchor href=#2-create-callouts-scss>2. Create _callouts.scss</a></h2><p>Create a new file, <strong>_callouts.scss</strong>, in<pre><code>sass/
+  parts/
+    _callouts.scss
+</code></pre><p>Add the content below to this new file. Each callout type uses the same base structure but with different colours and icons, so the SCSS repeats the same pattern with small variations.<pre class=language-scss data-lang=scss><code class=language-scss data-lang=scss>@font-face {
+  font-family: "JetBrainsMono Nerd";
+  src: url("/fonts/JetbrainsMono/JetBrainsMonoNerdFontPropo-Regular.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.callout {
+  padding: 1rem 1.25rem;
+  margin: 0rem 0rem;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+// TIP
+.callout-tip {
+  @extend .callout;
+  border-color: #b7d9d3;
+  background: #b7d9d333;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &::before {
+    content: "\f0eb";
+    font-family: "JetBrainsMono Nerd";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    background: #b7d9d3;
+    color: #233;
+    font-weight: 600;
+  }
+
+  &::after {
+    content: "Tip";
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+}
+
+// IMPORTANT
+.callout-important {
+  @extend .callout;
+  border-color: #f3c7b3;
+  background: #f3c7b333;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &::before {
+    content: "\f071";
+    font-family: "JetBrainsMono Nerd";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    color: #232634;             
+    background:  #f3c7b3;
+    font-weight: 600;
+  }
+  &::after {
+    content: "Important";
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+}
+
+// NOTE
+.callout-note {
+  @extend .callout;
+  border-color: #fff4b8;
+  background: #fff4b833;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &::before {
+    content: "\f040";
+    font-family: "JetBrainsMono Nerd";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    color: #232634;             
+    background:  #fff4b8;
+    font-weight: 600;
+  }
+
+  &::after {
+    content: "Note";
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+}
+
+// INFORMATION
+.callout-info {
+  @extend .callout;
+  border-color: #c9dff3;
+  background: #c9dff333;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &::before {
+    content: "\f449";
+    font-family: "JetBrainsMono Nerd";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    color: #232634;             
+    background:  #c9dff3;
+    font-weight: 600;
+  }
+
+  &::after {
+    content: "Information";
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+
+}
+</code></pre><h3 id=understanding-the-icon-codes><a aria-label="Anchor link for: understanding-the-icon-codes" class=zola-anchor href=#understanding-the-icon-codes>Understanding the icon codes</a></h3><div class=callout-note>The content values (\f0eb, \f071, etc.) come from the Font Awesome glyphs included in Nerd Fonts. You can swap these for any other Nerd Font icon.</div><p>The callouts now available are:<ul><li>Tip<li>Important<li>Note<li>Information</ul><p>Feel free to adjust colours, icons, or spacing to suit your theme.<h2 id=3-add-the-callout-html><a aria-label="Anchor link for: 3-add-the-callout-html" class=zola-anchor href=#3-add-the-callout-html>3. Add the callout HTML</a></h2><p>To add each of the callouts, within your post you would need to add:<p>a) <strong>Tip</strong><pre class=language-html data-lang=html><code class=language-html data-lang=html>&LTdiv class="callout-tip">
+This is the callout tip.
+&LT/div>
+</code></pre><div class=callout-tip>This is the callout tip.</div><p>b) <strong>Important</strong><pre class=language-html data-lang=html><code class=language-html data-lang=html>&LTdiv class="callout-important">
+This is where you can place important information.
+&LT/div>
+</code></pre><div class=callout-important>This is where you can place important information.</div><p>c) <strong>Note</strong><pre class=language-html data-lang=html><code class=language-html data-lang=html>&LTdiv class="callout-note">
+Where you add a note.
+&LT/div>
+</code></pre><div class=callout-note>Where you add a note.</div><p>d) <strong>Information</strong><pre class=language-html data-lang=html><code class=language-html data-lang=html>&LTdiv class="callout-info">
+This is additional information.
+&LT/div>
+</code></pre><div class=callout-info>This is additional information.</div><hr><p>That’s all you need to add callouts to the Apollo theme.</section></article></main></div></div><div class=right-content><div class=toc><div class=heading>Table of Contents</div><ul class=toc-list><li class=parent><a href=https://dajhub.co.uk/posts/zola-callouts/#1-add-a-nerd-font>1. Add a Nerd Font</a><li class=parent><a href=https://dajhub.co.uk/posts/zola-callouts/#2-create-callouts-scss>2. Create _callouts.scss</a> <ul><li><a href=https://dajhub.co.uk/posts/zola-callouts/#understanding-the-icon-codes>Understanding the icon codes</a></ul><li class=parent><a href=https://dajhub.co.uk/posts/zola-callouts/#3-add-the-callout-html>3. Add the callout HTML</a></ul></div></div>

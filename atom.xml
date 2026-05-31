@@ -1,0 +1,1191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>dajhub</title>
+    <subtitle>Welcome to my blog where, as a Linux enthusiast, I share my tips with you. I hope you find something that is useful. </subtitle>
+    <link rel="self" type="application/atom+xml" href="https://dajhub.co.uk/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://dajhub.co.uk"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-05-17T00:00:00+00:00</updated>
+    <id>https://dajhub.co.uk/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Hyprland dotfiles</title>
+        <published>2026-05-17T00:00:00+00:00</published>
+        <updated>2026-05-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/projects/hyprland/"/>
+        <id>https://dajhub.co.uk/projects/hyprland/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/projects/hyprland/"></content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Inserting callouts into a Zola static site</title>
+        <published>2026-05-01T00:00:00+00:00</published>
+        <updated>2026-05-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/zola-callouts/"/>
+        <id>https://dajhub.co.uk/posts/zola-callouts/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/zola-callouts/">&lt;p&gt;I really like &lt;a href=&quot;https:&#x2F;&#x2F;www.getzola.org&quot;&gt;Zola&lt;&#x2F;a&gt; as a static site generator for my blog. It is free to install and because I run it through my GitHub account there are no hosting fees.  The only ongoing cost is my domain name, dajhub.co.uk.&lt;&#x2F;p&gt;
+&lt;p&gt;The Zola site has some great themes to choose from but the one I went for is a theme provided by &lt;strong&gt;not-matthias&lt;&#x2F;strong&gt; called &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;not-matthias&#x2F;apollo&quot;&gt;apollo&lt;&#x2F;a&gt;.  Its simplicity appealed and it has been working well for me.&lt;&#x2F;p&gt;
+&lt;p&gt;The only change I have made is to add &lt;strong&gt;callouts&lt;&#x2F;strong&gt; to my site.  Callouts are useful for highlighting tips, warnings, or extra context without breaking the reading flow. The Apollo theme doesn’t include them by default, so I added my own lightweight implementation.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;1-add-a-nerd-font&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-add-a-nerd-font&quot; aria-label=&quot;Anchor link for: 1-add-a-nerd-font&quot;&gt;1. Add a Nerd Font&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;I wanted my callouts to use icons and so I needed to add an appropriate font.  I went for a &lt;a href=&quot;https:&#x2F;&#x2F;www.nerdfonts.com&#x2F;font-downloads&quot;&gt;Nerd Font&lt;&#x2F;a&gt; and downloaded the &lt;strong&gt;JetBrainsMono Nerd Font&lt;&#x2F;strong&gt;.  Once downloaded I placed just one font, &lt;strong&gt;JetBrainsMonoNerdFontPropo-Regular.ttf&lt;&#x2F;strong&gt;, into the already existing folder at &#x2F;static&#x2F;fonts&#x2F;JetbrainsMono, i.e.&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;static&amp;#x2F;
+  fonts&amp;#x2F;
+    JetBrainsMono&amp;#x2F;
+      JetBrainsMonoNerdFontPropo-Regular.ttf
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;2-create-callouts-scss&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-create-callouts-scss&quot; aria-label=&quot;Anchor link for: 2-create-callouts-scss&quot;&gt;2. Create _callouts.scss&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Create a new file, &lt;strong&gt;_callouts.scss&lt;&#x2F;strong&gt;, in&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;sass&amp;#x2F;
+  parts&amp;#x2F;
+    _callouts.scss
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Add the content below to this new file. Each callout type uses the same base structure but with different colours and icons, so the SCSS repeats the same pattern with small variations.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;scss&quot; class=&quot;language-scss &quot;&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;@font-face {
+  font-family: &amp;quot;JetBrainsMono Nerd&amp;quot;;
+  src: url(&amp;quot;&amp;#x2F;fonts&amp;#x2F;JetbrainsMono&amp;#x2F;JetBrainsMonoNerdFontPropo-Regular.ttf&amp;quot;)
+    format(&amp;quot;truetype&amp;quot;);
+  font-weight: normal;
+  font-style: normal;
+}
+
+.callout {
+  padding: 1rem 1.25rem;
+  margin: 0rem 0rem;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+&amp;#x2F;&amp;#x2F; TIP
+.callout-tip {
+  @extend .callout;
+  border-color: #b7d9d3;
+  background: #b7d9d333;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &amp;amp;::before {
+    content: &amp;quot;\f0eb&amp;quot;;
+    font-family: &amp;quot;JetBrainsMono Nerd&amp;quot;;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    background: #b7d9d3;
+    color: #233;
+    font-weight: 600;
+  }
+
+  &amp;amp;::after {
+    content: &amp;quot;Tip&amp;quot;;
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+}
+
+&amp;#x2F;&amp;#x2F; IMPORTANT
+.callout-important {
+  @extend .callout;
+  border-color: #f3c7b3;
+  background: #f3c7b333;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &amp;amp;::before {
+    content: &amp;quot;\f071&amp;quot;;
+    font-family: &amp;quot;JetBrainsMono Nerd&amp;quot;;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    color: #232634;             
+    background:  #f3c7b3;
+    font-weight: 600;
+  }
+  &amp;amp;::after {
+    content: &amp;quot;Important&amp;quot;;
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+}
+
+&amp;#x2F;&amp;#x2F; NOTE
+.callout-note {
+  @extend .callout;
+  border-color: #fff4b8;
+  background: #fff4b833;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &amp;amp;::before {
+    content: &amp;quot;\f040&amp;quot;;
+    font-family: &amp;quot;JetBrainsMono Nerd&amp;quot;;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    color: #232634;             
+    background:  #fff4b8;
+    font-weight: 600;
+  }
+
+  &amp;amp;::after {
+    content: &amp;quot;Note&amp;quot;;
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+}
+
+&amp;#x2F;&amp;#x2F; INFORMATION
+.callout-info {
+  @extend .callout;
+  border-color: #c9dff3;
+  background: #c9dff333;
+
+  position: relative;
+  padding-top: 3rem;
+
+  &amp;amp;::before {
+    content: &amp;quot;\f449&amp;quot;;
+    font-family: &amp;quot;JetBrainsMono Nerd&amp;quot;;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0.4rem 1.25rem;
+
+    color: #232634;             
+    background:  #c9dff3;
+    font-weight: 600;
+  }
+
+  &amp;amp;::after {
+    content: &amp;quot;Information&amp;quot;;
+
+    position: absolute;
+    top: 0.4rem;
+    left: 3rem;
+
+    font-family: inherit;
+    font-weight: 600;
+    color: #233;
+  }
+
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;understanding-the-icon-codes&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#understanding-the-icon-codes&quot; aria-label=&quot;Anchor link for: understanding-the-icon-codes&quot;&gt;Understanding the icon codes&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;div class=&quot;callout-note&quot;&gt;
+The content values (\f0eb, \f071, etc.) come from the Font Awesome glyphs included in Nerd Fonts. You can swap these for any other Nerd Font icon.
+&lt;&#x2F;div&gt;
+&lt;p&gt;The callouts now available are:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tip&lt;&#x2F;li&gt;
+&lt;li&gt;Important&lt;&#x2F;li&gt;
+&lt;li&gt;Note&lt;&#x2F;li&gt;
+&lt;li&gt;Information&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Feel free to adjust colours, icons, or spacing to suit your theme.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;3-add-the-callout-html&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#3-add-the-callout-html&quot; aria-label=&quot;Anchor link for: 3-add-the-callout-html&quot;&gt;3.  Add the callout HTML&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;To add each of the callouts, within your post you would need to add:&lt;&#x2F;p&gt;
+&lt;p&gt;a) &lt;strong&gt;Tip&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;html&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&amp;lt;div class=&amp;quot;callout-tip&amp;quot;&amp;gt;
+This is the callout tip.
+&amp;lt;&amp;#x2F;div&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;div class=&quot;callout-tip&quot;&gt;
+This is the callout tip.
+&lt;&#x2F;div&gt;
+&lt;p&gt;b) &lt;strong&gt;Important&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;html&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&amp;lt;div class=&amp;quot;callout-important&amp;quot;&amp;gt;
+This is where you can place important information.
+&amp;lt;&amp;#x2F;div&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;div class=&quot;callout-important&quot;&gt;
+This is where you can place important information.
+&lt;&#x2F;div&gt;
+&lt;p&gt;c) &lt;strong&gt;Note&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;html&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&amp;lt;div class=&amp;quot;callout-note&amp;quot;&amp;gt;
+Where you add a note.
+&amp;lt;&amp;#x2F;div&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;div class=&quot;callout-note&quot;&gt;
+Where you add a note.
+&lt;&#x2F;div&gt;
+&lt;p&gt;d) &lt;strong&gt;Information&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;html&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&amp;lt;div class=&amp;quot;callout-info&amp;quot;&amp;gt;
+This is additional information.
+&amp;lt;&amp;#x2F;div&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;div class=&quot;callout-info&quot;&gt;
+This is additional information.
+&lt;&#x2F;div&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;That’s all you need to add callouts to the Apollo theme.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Helix Text Editor: Opening through Thunar file manager</title>
+        <published>2025-11-14T00:00:00+00:00</published>
+        <updated>2025-11-14T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/helix-right-click/"/>
+        <id>https://dajhub.co.uk/posts/helix-right-click/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/helix-right-click/">&lt;p&gt;While I am still using the Micro text editor, I have also been testing out the &lt;a href=&quot;https:&#x2F;&#x2F;helix-editor.com&quot;&gt;Helix editor&lt;&#x2F;a&gt; as an easier introduction (for me) to vim and Neovim.&lt;&#x2F;p&gt;
+&lt;div class=&quot;callout-info&quot;&gt;
+&lt;p&gt;You can use any terminal with helix.  I&#x27;m using kitty so be aware that some of the guidance below relates to kitty. I am on Sway and Hyprland.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;As with the Micro text editor a couple of problems I came across were:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Right-clicking in the file manager Thunar to open a file in the Helix editor, I would get an error message &quot;Unable to find terminal required for application&quot;.&lt;&#x2F;li&gt;
+&lt;li&gt;Copying text from Helix into another application.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;solution-1-opening-a-file-from-thunar-into-helix&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#solution-1-opening-a-file-from-thunar-into-helix&quot; aria-label=&quot;Anchor link for: solution-1-opening-a-file-from-thunar-into-helix&quot;&gt;SOLUTION 1: Opening a file from Thunar into Helix&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Find where helix is installed with this command:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo find &amp;#x2F;usr -type f -name hx 2&amp;gt;&amp;#x2F;dev&amp;#x2F;null
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;For me the file location was at &lt;code&gt;&#x2F;usr&#x2F;lib&#x2F;helix&#x2F;hx&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit the system-wide desktop entry using the text editor of your choice, e.g. nano&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo nano &amp;#x2F;usr&amp;#x2F;share&amp;#x2F;applications&amp;#x2F;helix.desktop
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Within the file find the line that starts &lt;code&gt;Exec=&lt;&#x2F;code&gt; and edit it so that it now contains the following:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;Exec=kitty -e &amp;#x2F;usr&amp;#x2F;lib&amp;#x2F;helix&amp;#x2F;hx %F
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;div class=&quot;callout-important&quot;&gt;
+&lt;p&gt;You may need to change &lt;code&gt;&#x2F;usr&#x2F;lib&#x2F;helix&#x2F;hx&lt;&#x2F;code&gt; depending on the file location of helix.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;When you have saved the file (ctrl+O and ctrl+x to exit) you can then update the desktop database:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo update-desktop-database &amp;#x2F;usr&amp;#x2F;share&amp;#x2F;applications
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If you then reload thunar and then right-click a file → Open With → Helix, kitty should open correctly and run &#x2F;usr&#x2F;lib&#x2F;helix&#x2F;hx.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;solution-2-copying-a-piece-of-text-from-helix-into-another-application&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#solution-2-copying-a-piece-of-text-from-helix-into-another-application&quot; aria-label=&quot;Anchor link for: solution-2-copying-a-piece-of-text-from-helix-into-another-application&quot;&gt;SOLUTION 2: Copying a piece of text from Helix into another application&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;As I am using Sway and Hyprland you need to ensure that wl-clipboard is installed:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo pacman -S wl-clipboard`
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;The copy and paste function should now be working in Helix!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Micro Text Editor: Opening Micro through Thunar file manager</title>
+        <published>2025-05-30T00:00:00+00:00</published>
+        <updated>2025-05-30T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/micro-right-click/"/>
+        <id>https://dajhub.co.uk/posts/micro-right-click/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/micro-right-click/">&lt;p&gt;Using the Micro text editor has been a joy, but it does require sorting a few things to make it comfortable to use.  A problem I came across was in the file manager Thunar when I right-clicked on a file to open it in the Micro editor, I would get an error message &quot;Unable to find terminal required for application&quot;.&lt;&#x2F;p&gt;
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;micro-editor.webp&quot; alt=&quot;error message&quot;&gt;
+&lt;&#x2F;p&gt;
+&lt;p&gt;This is a simple problem to correct.  In a terminal open the following file:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo micro &amp;#x2F;usr&amp;#x2F;share&amp;#x2F;applications&amp;#x2F;micro.desktop
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Change the line that reads&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Exec = micro %F&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;to&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Exec = foot micro %F&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;If you use a different terminal, e.g. kitty&#x2F;alacritty, then replace &lt;strong&gt;foot&lt;&#x2F;strong&gt; with your terminal.&lt;&#x2F;p&gt;
+&lt;p&gt;Next, go to the line that reads&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Terminal = true&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;and change it to&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Terminal = false&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The final file should look as follows:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;micro-right-click&#x2F;micro-desktop-file.webp&quot; alt=&quot;micro.desktop file&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Changing the SDDM Display Manager (non-KDE)</title>
+        <published>2025-05-29T00:00:00+00:00</published>
+        <updated>2025-05-29T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/sddm/"/>
+        <id>https://dajhub.co.uk/posts/sddm/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/sddm/">&lt;p&gt;While I do not use the KDE desktop I do like its display manager, SDDM.  The default SDDM theme is not, in my opinion, very visually appealing (see image below) but it can be changed.  This post looks at how we can change the theme and then edit it to our liking.  I am currently using Arch but there will be similarities with other Linux Distribution such as Fedora and Debian.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;installing-the-sddm-display-manager&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#installing-the-sddm-display-manager&quot; aria-label=&quot;Anchor link for: installing-the-sddm-display-manager&quot;&gt;Installing the SDDM Display Manager&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;sddm&#x2F;sddm-default.webp&quot; alt=&quot;default sddm&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;In Arch, if you install and enable the sddm display manager (see terminal commands below) it will look similar to the screenshot above.  The &lt;a href=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;blog&#x2F;cinnamon-fedora-minimal&#x2F;#enabling-the-display-manager&quot;&gt;Fedora sddm display manager&lt;&#x2F;a&gt; will look slightly different.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo pacman -S sddm
+sudo systemctl enable sddm.service
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h1 id=&quot;install-an-sddm-theme&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#install-an-sddm-theme&quot; aria-label=&quot;Anchor link for: install-an-sddm-theme&quot;&gt;Install an SDDM Theme&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;I have found the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;aczw&#x2F;sddm-theme-corners&quot;&gt;sddm corners theme&lt;&#x2F;a&gt; easy to install (in a non-KDE environment) and also easy to edit.  Instructions for installation can be found on their &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;aczw&#x2F;sddm-theme-corners?tab=readme-ov-file#installation&quot;&gt;site&lt;&#x2F;a&gt;.  The theme can be found in Arch&#x27;s AUR. To install:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;# Install dependencies
+paru -Syu sddm qt5-graphicaleffects qt5-svg qt5-quickcontrols2
+
+# Install corners theme
+paru -S sddm-theme-corners-git
+
+# Makes it the default theme. 
+echo &amp;quot;[Theme]
+Current=corners&amp;quot; | sudo tee &amp;#x2F;etc&amp;#x2F;sddm.conf
+
+# Enable sddm service if this has not already been done above.  Use -f if needed.
+sudo systemctl enable sddm.service
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;SDDM with the new theme applied:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;sddm&#x2F;sddm-corners-orig.webp&quot; alt=&quot;sddm corners orig&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;making-changes-to-the-corners-theme&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#making-changes-to-the-corners-theme&quot; aria-label=&quot;Anchor link for: making-changes-to-the-corners-theme&quot;&gt;Making Changes to the Corners Theme&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;With the new theme installed we can easily tweak it.  The theme is located in &lt;code&gt;&#x2F;usr&#x2F;share&#x2F;sddm&#x2F;themes&#x2F;corners&#x2F;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;sddm&#x2F;corners-files.webp&quot; alt=&quot;corners files&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Changes that I have made:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;replaced the background image, located in &lt;code&gt;&#x2F;usr&#x2F;share&#x2F;sddm&#x2F;themes&#x2F;corners&#x2F;bacgrounds&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;widening the vertical gap between the date and time which seemed too close to me&lt;&#x2F;li&gt;
+&lt;li&gt;removing the user picture&lt;&#x2F;li&gt;
+&lt;li&gt;changing the look of the login details in the bottom right&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;The result:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;sddm&#x2F;corners-new.webp&quot; alt=&quot;corners new&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;To achieve the above you need to open the configuration file for the &lt;strong&gt;corners&lt;&#x2F;strong&gt; theme.  I use &lt;strong&gt;micro&lt;&#x2F;strong&gt; as my editor but you may be using &lt;strong&gt;nano&lt;&#x2F;strong&gt; or &lt;strong&gt;vim&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo micro &amp;#x2F;usr&amp;#x2F;share&amp;#x2F;sddm&amp;#x2F;themes&amp;#x2F;corners&amp;#x2F;theme.conf
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The contents of the &lt;strong&gt;original&lt;&#x2F;strong&gt; file:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;1	## Please see https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;aczw&amp;#x2F;sddm-theme-corners&amp;#x2F;blob&amp;#x2F;main&amp;#x2F;CONFIG.md for
+2	## more information about these options. Happy configuring!
+3	
+4	[General]
+5	
+6	# BgSource: string. Path to an image, used as the wallpaper. Can be placed
+7	# in the `backgrounds&amp;#x2F;` folder for convenience (see below!)
+8	#
+9	# FontFamily: string. Name of the font family. You can find this with
+10	# something like `fontconfig`, for example.
+11	#
+12	# FontSize: number. This value is used for everything *except* the date&amp;#x2F;time.
+13	#
+14	# Padding: number. How far away things should be from the edge of your screen.
+15	#
+16	# Radius: number. Corner radius for UI. Set to 0 to disable rounded corners.
+17	#
+18	# Scale: number. Adjusts the size of UI elements. Can be anything, but I
+19	# would stick between 1 and 2 (e.g. 1.5).
+20	
+21	BgSource=&amp;quot;backgrounds&amp;#x2F;glacier.png&amp;quot;
+22	FontFamily=&amp;quot;Atkinson Hyperlegible&amp;quot;
+23	FontSize=9
+24	Padding=50
+25	Radius=10
+26	Scale=1
+27	
+28	# UserPictureEnabled: boolean. By default the user picture is shown. Set to false
+29	# if you don&amp;#x27;t have&amp;#x2F;want a user picture, or you don&amp;#x27;t use the
+30	# user selection functionality.
+31	#
+32	# UserBorderWidth: number. Width of the border around your picture. Set to
+33	# 0 to remove.
+34	#
+35	# UserBorderColor: color. Border color around your picture. Useless if border
+36	# width is 0.
+37	#
+38	# UserColor: color. Background color of the default, blank avatar. Only
+39	# visible if you don&amp;#x27;t have your own picture.
+40	
+41	UserPictureEnabled=true
+42	UserBorderWidth=5
+43	UserBorderColor=&amp;quot;#b4befe&amp;quot;
+44	UserColor=&amp;quot;#cdd6f4&amp;quot;
+45	
+46	# InputColor: color. Background color of the input fields.
+47	#
+48	# InputTextColor: color. Color of text you enter in the fields.
+49	#
+50	# InputBorderWidth: number. Width of the border around the active field. Set
+51	# to 0 to remove.
+52	#
+53	# InputBorderColor: color. Border color of active field. Useless if border
+54	# width is 0.
+55	#
+56	# UserPlaceholderText: string. Placeholder text shown when user field is empty.
+57	#
+58	# PassPlaceholderText: string. Placeholder text shown when user field is empty.
+59	#
+60	# HidePassword: boolean. Whether to replace your entered password with dots.
+61	
+62	InputColor=&amp;quot;#1e1e2e&amp;quot;
+63	InputTextColor=&amp;quot;#cdd6f4&amp;quot;
+64	InputBorderWidth=4
+65	InputBorderColor=&amp;quot;#b4befe&amp;quot;
+66	UserPlaceholderText=&amp;quot;user&amp;quot;
+67	PassPlaceholderText=&amp;quot;password&amp;quot;
+68	HidePassword=true
+69	
+70	# LoginButtonTextColor: color. Text color on the login button.
+71	#
+72	# LoginButtonText: string. Text displayed on the button.
+73	#
+74	# LoginButtonColor: color. Background color of the button.
+75	
+76	LoginButtonTextColor=&amp;quot;#1e1e2e&amp;quot;
+77	LoginButtonText=&amp;quot;Login&amp;quot;
+78	LoginButtonColor=&amp;quot;#b4befe&amp;quot;
+79	
+80	# PopupColor: color. Background color of popup window.
+81	#
+82	# PopupActiveColor: color. Color around the currently selected entry.
+83	#
+84	# PopupActiveTextColor: color. Text color of the currently selected entry.
+85	# Mainly provided for potential contrast issues.
+86	
+87	PopupColor=&amp;quot;#b4befe&amp;quot;
+88	PopupActiveColor=&amp;quot;#1e1e2e&amp;quot;
+89	PopupActiveTextColor=&amp;quot;#cdd6f4&amp;quot;
+90	
+91	# SessionButtonColor: color. Session button background color.
+92	#
+93	# SessionIconColor: color. Color of the icon inside the session button.
+94	#
+95	# PowerButtonColor: color. Power button background color.
+96	#
+97	# PowerIconColor: color. Color of the icon inside the power button.
+98	
+99	SessionButtonColor=&amp;quot;#b4befe&amp;quot;
+100	SessionIconColor=&amp;quot;#1e1e2e&amp;quot;
+101	PowerButtonColor=&amp;quot;#b4befe&amp;quot;
+102	PowerIconColor=&amp;quot;#1e1e2e&amp;quot;
+103	
+104	# DateTimeSpacing: number. Spacing between the date and time.
+105	#
+106	# Date&amp;#x2F;TimeColor: color. Date&amp;#x2F;time text color.
+107	#
+108	# Date&amp;#x2F;TimeSize: number. Font size for the date&amp;#x2F;time.
+109	#
+110	# Date&amp;#x2F;TimeIsBold: boolean. Whether date&amp;#x2F;time text should be bolded.
+111	#
+112	# Date&amp;#x2F;TimeOpacity: number. Date&amp;#x2F;time text opacity.
+113	#
+114	# Date&amp;#x2F;TimeFormat: string. Change the format of how the date and time is displayed.
+115	# Note that they use different formats.
+116	
+117	DateTimeSpacing=-20
+118	
+119	DateColor=&amp;quot;#cdd6f4&amp;quot;
+120	DateSize=36
+121	DateIsBold=false
+122	DateOpacity=1.0
+123	DateFormat=&amp;quot;dddd, MMMM d&amp;quot;
+124	
+125	TimeColor=&amp;quot;#cdd6f4&amp;quot;
+126	TimeSize=48
+127	TimeIsBold=true
+128	TimeOpacity=1.0
+129	TimeFormat=&amp;quot;hh:mm AP&amp;quot;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The changes I then made to the above config file:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;text&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;line 21 BgSource=&amp;quot;backgrounds&amp;#x2F;light-blue-layers.jpg&amp;quot; #changed the background
+line 41 UserPictureEnabled=false #removes the login image&amp;#x2F;picture
+line 62 InputColor=&amp;quot;#b4befe&amp;quot;
+line 63 InputTextColor=&amp;quot;#4c4f69&amp;quot;
+line 64 InputBorderWidth=0 #changed from 4 to 0
+line 76 LoginButtonTextColor=&amp;quot;#4c4f69&amp;quot;
+line 78 LoginButtonColor=&amp;quot;#eff1f5&amp;quot;
+line 117 DateTimeSpacing=10 #changed from -20 to 10 to improve space between date &amp;amp; time
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;However, I might, in the near future, change the color of the date and time to improve the contrast with the background.  The white text does not really work on the light background.&lt;&#x2F;p&gt;
+&lt;p&gt;Below is the full config file for the updated theme:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;## Please see https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;aczw&amp;#x2F;sddm-theme-corners&amp;#x2F;blob&amp;#x2F;main&amp;#x2F;CONFIG.md for
+## more information about these options. Happy configuring!
+
+[General]
+
+# BgSource: string. Path to an image, used as the wallpaper. Can be placed
+# in the `backgrounds&amp;#x2F;` folder for convenience (see below!)
+#
+# FontFamily: string. Name of the font family. You can find this with
+# something like `fontconfig`, for example.
+#
+# FontSize: number. This value is used for everything *except* the date&amp;#x2F;time.
+#
+# Padding: number. How far away things should be from the edge of your screen.
+#
+# Radius: number. Corner radius for UI. Set to 0 to disable rounded corners.
+#
+# Scale: number. Adjusts the size of UI elements. Can be anything, but I
+# would stick between 1 and 2 (e.g. 1.5).
+
+BgSource=&amp;quot;backgrounds&amp;#x2F;light-blue-layers.jpg&amp;quot;
+FontFamily=&amp;quot;Atkinson Hyperlegible&amp;quot;
+FontSize=9
+Padding=50
+Radius=10
+Scale=1
+
+# UserPictureEnabled: boolean. By default the user picture is shown. Set to false
+# if you don&amp;#x27;t have&amp;#x2F;want a user picture, or you don&amp;#x27;t use the
+# user selection functionality.
+#
+# UserBorderWidth: number. Width of the border around your picture. Set to
+# 0 to remove.
+#
+# UserBorderColor: color. Border color around your picture. Useless if border
+# width is 0.
+#
+# UserColor: color. Background color of the default, blank avatar. Only
+# visible if you don&amp;#x27;t have your own picture.
+
+UserPictureEnabled=false
+UserBorderWidth=5
+UserBorderColor=&amp;quot;#b4befe&amp;quot;
+UserColor=&amp;quot;#cdd6f4&amp;quot;
+
+# InputColor: color. Background color of the input fields.
+#
+# InputTextColor: color. Color of text you enter in the fields.
+#
+# InputBorderWidth: number. Width of the border around the active field. Set
+# to 0 to remove.
+#
+# InputBorderColor: color. Border color of active field. Useless if border
+# width is 0.
+#
+# UserPlaceholderText: string. Placeholder text shown when user field is empty.
+#
+# PassPlaceholderText: string. Placeholder text shown when user field is empty.
+#
+# HidePassword: boolean. Whether to replace your entered password with dots.
+
+InputColor=&amp;quot;#b4befe&amp;quot;
+InputTextColor=&amp;quot;#4c4f69&amp;quot;
+InputBorderWidth=0
+InputBorderColor=&amp;quot;#b4befe&amp;quot;
+UserPlaceholderText=&amp;quot;user&amp;quot;
+PassPlaceholderText=&amp;quot;password&amp;quot;
+HidePassword=true
+
+# LoginButtonTextColor: color. Text color on the login button.
+#
+# LoginButtonText: string. Text displayed on the button.
+#
+# LoginButtonColor: color. Background color of the button.
+
+LoginButtonTextColor=&amp;quot;#4c4f69&amp;quot;
+LoginButtonText=&amp;quot;Login&amp;quot;
+LoginButtonColor=&amp;quot;#eff1f5&amp;quot;
+
+# PopupColor: color. Background color of popup window.
+#
+# PopupActiveColor: color. Color around the currently selected entry.
+#
+# PopupActiveTextColor: color. Text color of the currently selected entry.
+# Mainly provided for potential contrast issues.
+
+PopupColor=&amp;quot;#b4befe&amp;quot;
+PopupActiveColor=&amp;quot;#1e1e2e&amp;quot;
+PopupActiveTextColor=&amp;quot;#cdd6f4&amp;quot;
+
+# SessionButtonColor: color. Session button background color.
+#
+# SessionIconColor: color. Color of the icon inside the session button.
+#
+# PowerButtonColor: color. Power button background color.
+#
+# PowerIconColor: color. Color of the icon inside the power button.
+
+SessionButtonColor=&amp;quot;#b4befe&amp;quot;
+SessionIconColor=&amp;quot;#1e1e2e&amp;quot;
+PowerButtonColor=&amp;quot;#b4befe&amp;quot;
+PowerIconColor=&amp;quot;#1e1e2e&amp;quot;
+
+# DateTimeSpacing: number. Spacing between the date and time.
+#
+# Date&amp;#x2F;TimeColor: color. Date&amp;#x2F;time text color.
+#
+# Date&amp;#x2F;TimeSize: number. Font size for the date&amp;#x2F;time.
+#
+# Date&amp;#x2F;TimeIsBold: boolean. Whether date&amp;#x2F;time text should be bolded.
+#
+# Date&amp;#x2F;TimeOpacity: number. Date&amp;#x2F;time text opacity.
+#
+# Date&amp;#x2F;TimeFormat: string. Change the format of how the date and time is displayed.
+# Note that they use different formats.
+
+DateTimeSpacing=10
+
+DateColor=&amp;quot;#cdd6f4&amp;quot;
+DateSize=36
+DateIsBold=false
+DateOpacity=1.0
+DateFormat=&amp;quot;dddd, MMMM d&amp;quot;
+
+TimeColor=&amp;quot;#cdd6f4&amp;quot;
+TimeSize=48
+TimeIsBold=true
+TimeOpacity=1.0
+TimeFormat=&amp;quot;hh:mm AP&amp;quot;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Micro Text Editor - Copy and Paste Functionality in Wayland</title>
+        <published>2025-05-27T00:00:00+00:00</published>
+        <updated>2025-05-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/micro-copy-paste/"/>
+        <id>https://dajhub.co.uk/posts/micro-copy-paste/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/micro-copy-paste/">&lt;p&gt;I am not a developer or system administrator and have never really come to terms with the editors &lt;strong&gt;vim&lt;&#x2F;strong&gt; or &lt;strong&gt;neovim&lt;&#x2F;strong&gt;.  They are undoubtably configurable and efficient, but I do not use them enough to get to that &quot;efficient&quot; level. I am sure they would be great if you were using frequently, day in day out.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Nano&lt;&#x2F;strong&gt; is the go-to for many when they need to edit something quickly. The problem for me is that I have struggled to remember the shortcuts as they do not always seem logical, e.g. Ctrl+K to cut, Ctrl+U to paste.&lt;&#x2F;p&gt;
+&lt;p&gt;Having looked around for a while I&#x27;ve moved towards using &lt;a href=&quot;https:&#x2F;&#x2F;micro-editor.github.io&#x2F;&quot;&gt;micro&lt;&#x2F;a&gt; as a text editor.  For me it has the right level of functionality and the shortcuts are more familiar to me, e.g. CTRL+s to save, CTRL+c to copy, CTRL+v to paste.  You can even easily choose different themes.&lt;&#x2F;p&gt;
+&lt;p&gt;While I have enjoyed using and learning &lt;strong&gt;micro&lt;&#x2F;strong&gt;, the biggest surprise I have had with the editor is that I was unable to copy text from micro into another external application.  Apparently micro has its own internal clipboard for copying and pasting, which cannot be used outside the editor.  I am currently using the Hyprland and Sway, which are window managers that use Wayland as a compositor.  To get the copy &amp;amp; paste function to work, you will need to install an external clipboard manager, i.e. &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;bugaevc&#x2F;wl-clipboard&quot;&gt;wl-clipboard&lt;&#x2F;a&gt;.  To do this on &lt;strong&gt;Arch&lt;&#x2F;strong&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo pacman -S wl-clipboard
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;With &lt;strong&gt;wl-clipboard&lt;&#x2F;strong&gt; installed some changes need to be made to the settings in &lt;strong&gt;micro&lt;&#x2F;strong&gt;.  Using a text editor such as micro (!!) you can open and then edit the settings file.  To open the file:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;micro .config&amp;#x2F;micro&amp;#x2F;settings.json
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Within the opened file, add between the &lt;strong&gt;{ }&lt;&#x2F;strong&gt; brackets the following:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;json&quot; class=&quot;language-json &quot;&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;{
+    &amp;quot;clipboard&amp;quot;: &amp;quot;external&amp;quot;
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;My full settings file looks as follows:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;json&quot; class=&quot;language-json &quot;&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;{
+    &amp;quot;colorscheme&amp;quot;: &amp;quot;catppuccin-latte&amp;quot;,
+    &amp;quot;clipboard&amp;quot;: &amp;quot;external&amp;quot;,
+    &amp;quot;softwrap&amp;quot;: true
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The only difference from the previous is that there is a &lt;strong&gt;comma&lt;&#x2F;strong&gt; at the end of the line, since it is not the end of the settings.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Fedora: Minimal Cinnamon Desktop Install</title>
+        <published>2024-10-04T00:00:00+00:00</published>
+        <updated>2024-10-04T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/cinnamon-fedora-minimal/"/>
+        <id>https://dajhub.co.uk/posts/cinnamon-fedora-minimal/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/cinnamon-fedora-minimal/">&lt;p&gt;Fedora offers a specific spin for &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;spins&#x2F;&quot;&gt;Cinnamon Desktop&lt;&#x2F;a&gt; but if you are looking for a more minimal install which doesn&#x27;t include, for example, dnfdragora, LibrOffice, HexChat, Pidgin, Thunderbird, Transmission, Rhythmbox, XawTV Television Viewer, etc., then this post might be of interest.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;cinnamon-fedora-minimal&#x2F;desktop.webp&quot; alt=&quot;cinnamon-desktop&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;a-minimal-install&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#a-minimal-install&quot; aria-label=&quot;Anchor link for: a-minimal-install&quot;&gt;A Minimal Install&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;To make a minimal Fedora install you will need to download the iso from the &lt;strong&gt;Fedora Everything&lt;&#x2F;strong&gt; &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;everything&#x2F;download&quot;&gt;page&lt;&#x2F;a&gt;.  The Fedora installer takes you through the installation process in clear steps.  Importantly, when you get to the page&#x2F;step shown below ensure that you only select *&lt;strong&gt;Minimal Install&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;cinnamon-fedora-minimal&#x2F;minimal-install.webp&quot; alt=&quot;fedora-minimal&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;With the installation complete, reboot and login with your username and password. To install the basic Cinnamon desktop you need to install the following:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo dnf install cinnamon* @base-x
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;You will also want to install some essentials, e.g.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo dnf install nemo-fileroller gnome-terminal firefox
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h1 id=&quot;display-manager&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#display-manager&quot; aria-label=&quot;Anchor link for: display-manager&quot;&gt;Display Manager&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;The display manager or login manager is where you input your username and password to get to your desktop.  The display manager I use is &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sddm&#x2F;sddm&quot;&gt;sddm&lt;&#x2F;a&gt;, which is the default for KDE. The Cinnamon default is &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linuxmint&#x2F;slick-greeter&quot;&gt;slick-greeter&lt;&#x2F;a&gt;. Installing and enable either option is shown below.  For sddm,&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo dnf install sddm
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;or for slick-greeter&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo dnf install lightdm slick-greeter
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;enabling-the-display-manager&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#enabling-the-display-manager&quot; aria-label=&quot;Anchor link for: enabling-the-display-manager&quot;&gt;Enabling the Display Manager&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;You will need to enable your chosen display manager. For &lt;strong&gt;sddm&lt;&#x2F;strong&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;systemctl enable sddm
+systemctl set-default graphical.target
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;cinnamon-fedora-minimal&#x2F;sddm.webp&quot; alt=&quot;sddm&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Not the most attractive display manager!!  However, the layout&#x2F;look can be improved and may be the content for a future post.&lt;&#x2F;p&gt;
+&lt;p&gt;To enable &lt;strong&gt;slick greeter&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;systemctl enable lightdm
+systemctl set-default graphical.target
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;cinnamon-fedora-minimal&#x2F;slick-greeter.webp&quot; alt=&quot;slick-greeter&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;You can now reboot into your display manager and login to your desktop.  To do this,&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;reboot
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h1 id=&quot;connecting-to-wi-fi&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#connecting-to-wi-fi&quot; aria-label=&quot;Anchor link for: connecting-to-wi-fi&quot;&gt;Connecting to Wi-Fi&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;If you are installing the desktop onto a laptop then you might also need to connect to Wi-Fi.  In a terminal,&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo dnf install NetworkManager-wifi iwl*
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;You may need to reboot for the changes to take effect.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Moving to Debian Unstable</title>
+        <published>2024-08-05T00:00:00+00:00</published>
+        <updated>2024-08-05T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/debian-unstable/"/>
+        <id>https://dajhub.co.uk/posts/debian-unstable/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/debian-unstable/">&lt;p&gt;Debian is often chosen for its stability and for a system that just works.  However, that stability often means that packages can become out of date.  Moving to the &lt;strong&gt;unstable&lt;&#x2F;strong&gt; branch might be an option.&lt;&#x2F;p&gt;
+&lt;p&gt;Debian Unstable will provide you with newer packages, but there are inherent risks of breakages, since the packages have not been fully tested. If you do move to Unstable, it&#x27;s probably best not to do it on a critical machine where you need guaranteed stability. With that said, the steps to move from Debian Stable to Unstable:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Using an editor such as nano, micro or vim open the Apt Sources file.  Apt downloads packages from one or more software repositories (sources) and installs them onto your computer.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo micro &amp;#x2F;etc&amp;#x2F;apt&amp;#x2F;sources.list
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;debian-unstable&#x2F;sources-orig.webp&quot; alt=&quot;sources.list original&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;In the &lt;code&gt;sources.list&lt;&#x2F;code&gt; there needs to be only two entries (see screenshot below):&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;deb http:&amp;#x2F;&amp;#x2F;deb.debian.org&amp;#x2F;debian&amp;#x2F; unstable main non-free-firmware
+deb-src http:&amp;#x2F;&amp;#x2F;deb.debian.org&amp;#x2F;debian&amp;#x2F; unstable main non-free-firmware
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The other entries&#x2F;sources can be commented out using the &lt;strong&gt;&lt;code&gt;#&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt; at the beginning of the line.  This will stop them from running.  You can also delete the unneeded sources if desired.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;debian-unstable&#x2F;sources-unstable.webp&quot; alt=&quot;sources.list unstable&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Next, to update the sources list run&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo apt update &amp;amp;&amp;amp; sudo apt full-upgrade
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This may take some time.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;div class=&quot;callout-tip&quot;&gt;
+&lt;p&gt;&lt;strong&gt;Avoiding bugs&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;In order to make your life easier in the Unstable version, install the
+apt-listbugs and apt-listchanges packages so that you are notified of
+grave bugs or important changes when you install new packages or during
+an upgrade. &lt;sup&gt;&lt;a href=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;debian-unstable&#x2F;#debian_unstable&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo apt update &amp;amp;&amp;amp; sudo apt install apt-listbugs apt-listchanges
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;div&gt;
+&lt;br&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a name=&quot;debian_unstable&quot;&gt;1&lt;&#x2F;a&gt;: &lt;a href=&quot;https:&#x2F;&#x2F;wiki.debian.org&#x2F;DebianUnstable#:~:text=Install%20the%20apt%2Dlistbugs%20and,data%20is%20not%20a%20problem&quot;&gt;Debian Best Practices for Sid&#x2F;Unstable Users&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Mango dotfiles</title>
+        <published>2024-01-20T00:00:00+00:00</published>
+        <updated>2024-01-20T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/projects/mango/"/>
+        <id>https://dajhub.co.uk/projects/mango/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/projects/mango/"></content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>i3 Window Manager - Spiral Tiling</title>
+        <published>2023-09-22T00:00:00+00:00</published>
+        <updated>2023-09-22T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/i3-tiling/"/>
+        <id>https://dajhub.co.uk/posts/i3-tiling/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/i3-tiling/">&lt;p&gt;i3 is a great tiling window manager which automatically places your windows in vertical columns.  However, it is fairly straight foward to move to a spiral layout.&lt;&#x2F;p&gt;
+&lt;p&gt;The default tiling for i3 looks like:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;i3-tiling&#x2F;i3-tiling-orig.webp&quot; alt=&quot;i3-tiling-original&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;My prefered tiling is a spiral layout as shown below.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;i3-tiling&#x2F;i3-tiling-new.webp&quot; alt=&quot;i3-tiling-new&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;To achieve this spiral tiling, Piotr Miller has created a fantastic script which can be found on his &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;nwg-piotr&#x2F;autotiling&#x2F;tree&#x2F;master&quot;&gt;GitHub page&lt;&#x2F;a&gt;.    It is worth reading through the GitHub page before proceeding.  However, the process for installing autotiling script on &lt;strong&gt;Fedora&lt;&#x2F;strong&gt; is as follows:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;To meet the requirements for installing the script you will need to install &lt;code&gt;pip&lt;&#x2F;code&gt;, which is a package manager for the Python coding language, and &lt;code&gt;13ipc&lt;&#x2F;code&gt;, which is a Python library for controlling the window manage (i3).  In a terminal:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo dnf install python3-pip
+pip install i3ipc
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Next, locate the file &lt;code&gt;main.py&lt;&#x2F;code&gt; in the GitHub page.  If you navigate to &lt;strong&gt;View code&lt;&#x2F;strong&gt; near the top of the GitHub page	and then find the folder &lt;strong&gt;autotiling&lt;&#x2F;strong&gt;.  In the &lt;strong&gt;autotiling&lt;&#x2F;strong&gt; folder, open the &lt;code&gt;main.py&lt;&#x2F;code&gt; file and copy the contents into a new file.  The new file has to be created called &lt;code&gt;autotiling&lt;&#x2F;code&gt;. For me, I created the new file in &lt;strong&gt;Downloads&lt;&#x2F;strong&gt; since we&#x27;re going to move it shortly.  Having created the file but before moving it, we need to make the file executable:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;chmod +x ~&amp;#x2F;Downloads&amp;#x2F;autotiling
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;We can now move the file we have created to our bin folder located at &#x2F;bin&#x2F;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo mv ~&amp;#x2F;Downloads&amp;#x2F;autotiling &amp;#x2F;bin&amp;#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;To ensure that autotiling starts when i3 loads, we need to add the following script to our &lt;code&gt;config&lt;&#x2F;code&gt; file which is located in &lt;code&gt;~&#x2F;.config&#x2F;i3&#x2F;&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;# autotiling script
+exec_always --no-startup-id autotiling
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;You will need to log out and then login for the changes to take effect.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Debian - Help, I’m not in the sudoers file!!</title>
+        <published>2023-09-16T00:00:00+00:00</published>
+        <updated>2023-09-16T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/debian-not-sudoers-file/"/>
+        <id>https://dajhub.co.uk/posts/debian-not-sudoers-file/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/debian-not-sudoers-file/">&lt;p&gt;What do you do if you get the message &lt;strong&gt;&quot;Username is not in the sudoers file. This incident will be reported.&quot;&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;It may be that having installed a new Debian desktop (in my case XFCE4) and you try to update (i.e. &quot;&lt;strong&gt;$ sudo apt update &amp;amp;&amp;amp; sudo apt upgrade&lt;&#x2F;strong&gt;&quot;) you end up with the following error message:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;debian-not-sudoers-file&#x2F;sudoer-error.webp&quot; alt=&quot;sudoers-error&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The message is just a warning on your local machine.  It shows that you attempted to gain root access and were not an authorised user.  To add yourself to the sudoers file you will firstly need, through your terminal, to login as root, i.e.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ su
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;In the same terminal you now need to open the sudoers file in order to edit it. I am opening the sudoers file using nano:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ nano &amp;#x2F;etc&amp;#x2F;sudoers
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Scroll down to this entry,&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;#User privilege specification
+root   ALL=(ALL:ALL) ALL
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;debian-not-sudoers-file&#x2F;sudoer-nano.webp&quot; alt=&quot;sudoers-nano&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;You then want to add an additional line (i.e. &lt;code&gt;david ALL=(ALL) ALL&lt;&#x2F;code&gt;) to provide yourself with sudo privileges.  Your user name will obviously be different from mine but the entry should look something like this,&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;debian-not-sudoers-file&#x2F;sudoer-added.webp&quot; alt=&quot;sudoer-added&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;You can then save (CTRL+O) and exit (CTRL+X).&lt;&#x2F;p&gt;
+&lt;p&gt;Close your terminal and re-open.&lt;&#x2F;p&gt;
+&lt;p&gt;If you now try to update with &quot;&lt;strong&gt;$ sudo apt update &amp;amp;&amp;amp; sudo apt upgrade&lt;&#x2F;strong&gt;&quot; you should find that your password is now accepted and updates will progress as normal.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Changing Display Manager from LightDM to Slick Greeter</title>
+        <published>2022-04-16T00:00:00+00:00</published>
+        <updated>2022-04-16T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/change-display-manager/"/>
+        <id>https://dajhub.co.uk/posts/change-display-manager/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/change-display-manager/">&lt;p&gt;Display managers provide you with a graphical login for your Linux distrbution.  Below is an example of the &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;LightDM&quot;&gt;LightDM&lt;&#x2F;a&gt; display manager which is on my current Arch install:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;change-display-manager&#x2F;lightdm.webp&quot; alt=&quot;LightDM-display-manager&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;An alternative display manager is &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linuxmint&#x2F;slick-greeter&quot;&gt;slick-greeter&lt;&#x2F;a&gt; which uses LightDM but is &lt;a href=&quot;https:&#x2F;&#x2F;linuxmint.com&#x2F;&quot;&gt;Linux Mint’s&lt;&#x2F;a&gt; Cinnamon desktop own version.  There are some, including me, that believe it is a more attractive display manager than the default LightDM display manager.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;installing-slick-greeter&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#installing-slick-greeter&quot; aria-label=&quot;Anchor link for: installing-slick-greeter&quot;&gt;Installing Slick-greeter&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;To install slick-greeter on Arch via your terminal:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo pacman -S lightdm-slick-greeter
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;changing-the-default-greeter-session&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#changing-the-default-greeter-session&quot; aria-label=&quot;Anchor link for: changing-the-default-greeter-session&quot;&gt;Changing the Default Greeter Session&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Once you have installed slick-greeter you need to change the default greeter session, which is LightDM.  In your terminal:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo nano &amp;#x2F;etc&amp;#x2F;lightdm&amp;#x2F;lightdm.conf
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Once opened, scroll down to the line [Seat:*]. About sixteen lines below this you will see a line which looks like:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;greeter-session=lightdm-gtk-greeter
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The line needs to be changed to:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;greeter-session=lightdm-slick-greeter
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Save the file with the modification you have made using Ctrl+O.  To exit nano use Ctrl+X.&lt;&#x2F;p&gt;
+&lt;p&gt;Next, as root open nano again&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo nano &amp;#x2F;etc&amp;#x2F;lightdm&amp;#x2F;slick-greeter.conf 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The file will not exist, so nano will create it.  You can then add the following lines (source: https:&#x2F;&#x2F;github.com&#x2F;linuxmint&#x2F;slick-greeter) to slick-greeter.conf.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;# LightDM GTK+ Configuration
+# Available configuration options listed below.
+#
+# activate-numlock=Whether to activate numlock. This features requires the installation of numlockx. (true or false)
+# background=Background file to use, either an image path or a color (e.g. #772953)
+# background-color=Background color (e.g. #772953), set before wallpaper is seen
+# draw-user-backgrounds=Whether to draw user backgrounds (true or false)
+# draw-grid=Whether to draw an overlay grid (true or false)
+# show-hostname=Whether to show the hostname in the menubar (true or false)
+# show-power=Whether to show the power indicator in the menubar (true or false)
+# show-a11y=Whether to show the accessibility options in the menubar (true or false)
+# show-keyboard=Whether to show the keyboard indicator in the menubar (true or false)
+# show-clock=Whether to show the clock in the menubar (true or false)
+# show-quit=Whether to show the quit menu in the menubar (true or false)
+# logo=Logo file to use
+# other-monitors-logo=Logo file to use for other monitors
+# theme-name=GTK+ theme to use
+# icon-theme-name=Icon theme to use
+# font-name=Font to use
+# xft-antialias=Whether to antialias Xft fonts (true or false)
+# xft-dpi=Resolution for Xft in dots per inch
+# xft-hintstyle=What degree of hinting to use (hintnone&amp;#x2F;hintslight&amp;#x2F;hintmedium&amp;#x2F;hintfull)
+# xft-rgba=Type of subpixel antialiasing (none&amp;#x2F;rgb&amp;#x2F;bgr&amp;#x2F;vrgb&amp;#x2F;vbgr)
+# onscreen-keyboard=Whether to enable the onscreen keyboard (true or false)
+# high-contrast=Whether to use a high contrast theme (true or false)
+# screen-reader=Whether to enable the screen reader (true or false)
+# play-ready-sound=A sound file to play when the greeter is ready
+# hidden-users=List of usernames that are hidden until a special key combination is hit
+# group-filter=List of groups that users must be part of to be shown (empty list shows all users)
+# enable-hidpi=Whether to enable HiDPI support (on&amp;#x2F;off&amp;#x2F;auto)
+# only-on-monitor=Sets the monitor on which to show the login window, -1 means &amp;quot;follow the mouse&amp;quot;
+# stretch-background-across-monitors=Whether to stretch the background across multiple monitors (false by default)
+# clock-format=What clock format to use (e.g., %H:%M or %l:%M %p)
+[Greeter]
+draw-grid=false
+background=&amp;#x2F;usr&amp;#x2F;share&amp;#x2F;backgrounds&amp;#x2F;archlinux.png
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The #&#x27;s mean that the options are not being used but can become active by uncommenting.  See the last two lines as an example. Change the &quot;background=&quot; to whatever background file you desire. Save the file as before with Ctrl+O and then Ctrl+X.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-result&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#the-result&quot; aria-label=&quot;Anchor link for: the-result&quot;&gt;The Result!!&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;After restarting your computer the new login screen looks as follows:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;change-display-manager&#x2F;slick-greeter.webp&quot; alt=&quot;SlickGreeter-DM&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Resizing Images with ImageMagick</title>
+        <published>2022-04-16T00:00:00+00:00</published>
+        <updated>2022-04-16T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/imagemagik/"/>
+        <id>https://dajhub.co.uk/posts/imagemagik/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/imagemagik/">&lt;p&gt;ImageMagick is free and open-source software which allows you to use the command line to convert and modify images in many formats including GIF, JPEG, and PNG. Using the terminal to manipulate images is, on the whole, straightforward and can save a lot of time.&lt;&#x2F;p&gt;
+&lt;p&gt;In Fedora you will first need to install ImageMagick:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo dnf install ImageMagick
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;In Ubuntu the commands are:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo apt update
+$ sudo apt upgrade
+$ sudo apt install imagemagick
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;In Arch:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo pacman -S imagemagick
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;There are a range of different activities you can do using ImageMagick. Below are two commands which I use regularly.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Converting an Image to a Different Format&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;You may have, for example, an image which you want to convert from a png to jpg format. To do this make sure you are in the directory where your file is.  If the picture is in the folder Pictures then in your terminal type, &lt;code&gt;cd Pictures&lt;&#x2F;code&gt;. Once in the correct folder type into the terminal:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ convert forest.png forest.jpg
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;Resizing an Image&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The convert command can also be used to quickly resize an image. I often use this to resize images for my screen size or my blog.  The following command gets ImageMagick to resize an image to 1366 pixels in width and 768 pixels in height:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;convert forest.jpg -resize 1366x768 forest.jpg
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;To find out the other things you can do with the package visit the ImageMagicks &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;ImageMagick&#x2F;ImageMagick#features-and-capabilities&quot;&gt;&lt;strong&gt;github page&lt;&#x2F;strong&gt;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Useful bspwm Shorcuts</title>
+        <published>2021-07-17T00:00:00+00:00</published>
+        <updated>2021-07-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/bspwm-shortcuts/"/>
+        <id>https://dajhub.co.uk/posts/bspwm-shortcuts/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/bspwm-shortcuts/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;baskerville&#x2F;bspwm&quot;&gt;bspwm&lt;&#x2F;a&gt; is a tiling window manager along the lines of &lt;a href=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;2021&#x2F;07&#x2F;03&#x2F;Qtile-in-Manjaro.html&quot;&gt;qtile&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;i3wm.org&quot;&gt;i3&lt;&#x2F;a&gt;.  The window manager, bspwm, does not handle any keyboard inputs and a third party program, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;baskerville&#x2F;sxhkd&quot;&gt;sxhkd&lt;&#x2F;a&gt;, is needed in order to translate keyboard events to navigate around bspwm.&lt;&#x2F;p&gt;
+&lt;p&gt;Most of my keyboard shortcuts are the default from &#x27;sxhkd&#x27;.  However, there are a few additions which have made navigation much easier for me.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;1-rotate-an-application-around-the-current-desktop&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-rotate-an-application-around-the-current-desktop&quot; aria-label=&quot;Anchor link for: 1-rotate-an-application-around-the-current-desktop&quot;&gt;1. Rotate an application around the current desktop&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;super + shift + {p,o}
+      bspc node @&amp;#x2F; -C {forward,backward}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The keys &#x27;p&#x27; and &#x27;o&#x27; can be changed for whatever you prefer - they just work for me!  If you use &#x27;super + shift + p&#x27; this will move your windows in a clockwise direction around the desktop.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;2-expand-contract-a-window-by-moving-one-of-its-side-outward-inward&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-expand-contract-a-window-by-moving-one-of-its-side-outward-inward&quot; aria-label=&quot;Anchor link for: 2-expand-contract-a-window-by-moving-one-of-its-side-outward-inward&quot;&gt;2. Expand&#x2F;contract a window by moving one of its side outward&#x2F;inward&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;There is a command in &#x27;sxhkd&#x27; which allows you to expand and contract a window but, for me, it feels cumbersome and counter-intuitive.  The original sxhkd keyboard shortcuts are:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;# expand a window by moving one of its side outward
+      super + alt + {h,j,k,l}
+      	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+      super + alt + shift + {h,j,k,l}
+      	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;For me a simpler method is as follows:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;alt  {Left,Down,Up,Right}
+      STEP=20; SELECTION={1,2,3,4}; \
+      bspc node -z $(echo &amp;quot;left -$STEP 0,bottom 0 $STEP,top 0 -$STEP,right $STEP 0&amp;quot; | cut -d&amp;#x27;,&amp;#x27; -f$SELECTION) || \
+      bspc node -z $(echo &amp;quot;right -$STEP 0,top 0 $STEP,bottom 0 -$STEP,left $STEP 0&amp;quot; | cut -d&amp;#x27;,&amp;#x27; -f$SELECTION)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;3-focus-the-next-previous-desktop-in-the-current-monitor&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#3-focus-the-next-previous-desktop-in-the-current-monitor&quot; aria-label=&quot;Anchor link for: 3-focus-the-next-previous-desktop-in-the-current-monitor&quot;&gt;3. Focus the next&#x2F;previous desktop in the current monitor&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;This one took me a while to find but one which I really wanted.  It allows you to rotate through your desktops - in my case I have 5.  The shortcut makes it a breeze to move through them, either backwards or forwards:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;plain&quot; class=&quot;language-plain &quot;&gt;&lt;code class=&quot;language-plain&quot; data-lang=&quot;plain&quot;&gt;      super + bracket{left,right}
+      	bspc desktop -f {prev,next}.local
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If needed, my configuration file can be found on my &lt;a href=&quot;https:&#x2F;&#x2F;gitlab.com&#x2F;dajhub&#x2F;bspwm&#x2F;-&#x2F;blob&#x2F;main&#x2F;.config&#x2F;sxhkd&#x2F;sxhkdrc?ref_type=heads&quot;&gt;GitLab&lt;&#x2F;a&gt; page.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Peek in Fedora</title>
+        <published>2021-01-21T00:00:00+00:00</published>
+        <updated>2021-01-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://dajhub.co.uk/posts/peek-in-fedora/"/>
+        <id>https://dajhub.co.uk/posts/peek-in-fedora/</id>
+        
+        <content type="html" xml:base="https://dajhub.co.uk/posts/peek-in-fedora/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;phw&#x2F;peek&quot;&gt;Peek&lt;&#x2F;a&gt; is an open source screen recorder for producing gif&#x27;s.&lt;&#x2F;p&gt;
+&lt;p&gt;Peek has an easy to use interface.  Once installed you open the app, position the see through frame over the part of the screen you want to record, and then press the record button...an example...&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;peek-in-fedora&#x2F;peek.gif&quot; alt=&quot;peek&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;When you have finished recording you press &#x27;stop&#x27; and finally give the .gif file a name.&lt;&#x2F;p&gt;
+&lt;p&gt;The current Peek version:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;peek-in-fedora&#x2F;about-peek.webp&quot; alt=&quot;about-peek&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;span style=&quot;font-size:1.25em;font-weight:bold;&quot;&gt;Installing Peek&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;To install Peek on Fedora open a terminal and type:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo dnf install Peek
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;When opening Peek for the first time you may get the following error message:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;peek-in-fedora&#x2F;peek-ffmpeg.webp&quot; alt=&quot;error-message&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;If this happens you may need to install ffmpeg, which processes video and audio files:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ sudo dnf install ffmpeg
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Opening the app should now work.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;dajhub.co.uk&#x2F;posts&#x2F;peek-in-fedora&#x2F;peek-screen.webp&quot; alt=&quot;peek-screen&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>
